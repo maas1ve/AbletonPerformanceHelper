@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let appMenu = NSMenu(title: "AbletonPerformanceHelper")
         appMenuItem.submenu = appMenu
-        appMenu.addItem(withTitle: "About AbletonPerformanceHelper", action: #selector(orderFrontStandardAboutPanel(_:)), keyEquivalent: "")
+        appMenu.addItem(withTitle: "About AbletonPerformanceHelper", action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: "")
         appMenu.addItem(NSMenuItem.separator())
         appMenu.addItem(withTitle: "Preferences…", action: #selector(openConfig), keyEquivalent: ",")
         appMenu.addItem(NSMenuItem.separator())
