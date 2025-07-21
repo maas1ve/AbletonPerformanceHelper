@@ -4,19 +4,48 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem!
     var watcher: AppWatcher!
-
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        statusItem.button?.title = "🎛"
+        setupMainMenu()
+        setupStatusItem()
+        startWatcher()
+    }
 
+    private func setupMainMenu() {
+        let mainMenu = NSMenu()
+        let appMenuItem = NSMenuItem()
+        mainMenu.addItem(appMenuItem)
+        
+        let appMenu = NSMenu(title: "AbletonPerformanceHelper")
+        appMenuItem.submenu = appMenu
+        appMenu.addItem(withTitle: "About AbletonPerformanceHelper", action: #selector(orderFrontStandardAboutPanel(_:)), keyEquivalent: "")
+        appMenu.addItem(NSMenuItem.separator())
+        appMenu.addItem(withTitle: "Preferences…", action: #selector(openConfig), keyEquivalent: ",")
+        appMenu.addItem(NSMenuItem.separator())
+        appMenu.addItem(withTitle: "Quit AbletonPerformanceHelper", action: #selector(quitApp), keyEquivalent: "q")
+        
+        NSApp.mainMenu = mainMenu
+    }
+
+    private func setupStatusItem() {
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        if let button = statusItem.button {
+            button.image = NSImage(systemSymbolName: "speedometer", accessibilityDescription: "Performance")
+            button.image?.isTemplate = true
+        }
+        
         let menu = NSMenu()
-        menu.addItem(NSMenuItem(title: "Enable Performance Mode", action: #selector(enablePerformanceMode), keyEquivalent: "E"))
-        menu.addItem(NSMenuItem(title: "Restore Normal Mode", action: #selector(restoreNormalMode), keyEquivalent: "R"))
-        menu.addItem(NSMenuItem(title: "Open Config", action: #selector(openConfig), keyEquivalent: ","))
+        menu.addItem(withTitle: "Enable Performance Mode", action: #selector(enablePerformanceMode), keyEquivalent: "e")
+        menu.addItem(withTitle: "Restore Normal Mode", action: #selector(restoreNormalMode), keyEquivalent: "r")
         menu.addItem(NSMenuItem.separator())
-        menu.addItem(NSMenuItem(title: "Quit", action: #selector(quitApp), keyEquivalent: "q"))
+        menu.addItem(withTitle: "Preferences…", action: #selector(openConfig), keyEquivalent: ",")
+        menu.addItem(NSMenuItem.separator())
+        menu.addItem(withTitle: "Quit", action: #selector(quitApp), keyEquivalent: "q")
 
         statusItem.menu = menu
+    }
+
+    private func startWatcher() {
         watcher = AppWatcher(onAbletonLaunch: {
             ScriptRunner.runScript(named: "enable_performance_mode.sh")
             NotificationHelper.sendNotification(title: "Ableton Detected", body: "Performance Mode Enabled")
