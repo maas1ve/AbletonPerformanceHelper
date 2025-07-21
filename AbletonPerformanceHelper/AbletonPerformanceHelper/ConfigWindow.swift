@@ -14,15 +14,25 @@ struct ConfigWindow: View {
         .frame(width: 300, height: 150)
     }
 
+    private static var window: NSWindow?
+
     static func show() {
-        let window = NSWindow(
+        if let existing = window {
+            existing.makeKeyAndOrderFront(nil)
+            NSApp.activate(ignoringOtherApps: true)
+            return
+        }
+
+        let newWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 300, height: 150),
             styleMask: [.titled, .closable],
             backing: .buffered,
             defer: false)
-        window.center()
-        window.setFrameAutosaveName("Config")
-        window.contentView = NSHostingView(rootView: ConfigWindow())
-        window.makeKeyAndOrderFront(nil)
+        newWindow.center()
+        newWindow.setFrameAutosaveName("Config")
+        newWindow.contentView = NSHostingView(rootView: ConfigWindow())
+        newWindow.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+        window = newWindow
     }
 }
