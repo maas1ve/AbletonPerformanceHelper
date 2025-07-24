@@ -6,7 +6,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var watcher: AppWatcher!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        NSApp.setActivationPolicy(.accessory)
+        NSApp.setActivationPolicy(.regular)
         setupMainMenu()
         setupStatusItem()
         startWatcher()

@@ -36,7 +36,9 @@ struct ConfigWindow: View {
 
     static func show() {
         if let existing = window {
+            NSApp.setActivationPolicy(.regular)
             existing.makeKeyAndOrderFront(nil)
+            existing.orderFrontRegardless()
             NSApp.activate(ignoringOtherApps: true)
             return
         }
@@ -49,8 +51,9 @@ struct ConfigWindow: View {
         newWindow.center()
         newWindow.setFrameAutosaveName("Config")
         newWindow.contentView = NSHostingView(rootView: ConfigWindow())
-        newWindow.makeKeyAndOrderFront(nil)
         NSApp.setActivationPolicy(.regular)
+        newWindow.makeKeyAndOrderFront(nil)
+        newWindow.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
         newWindow.delegate = WindowDelegate.shared
         window = newWindow
@@ -61,6 +64,5 @@ private class WindowDelegate: NSObject, NSWindowDelegate {
     static let shared = WindowDelegate()
     func windowWillClose(_ notification: Notification) {
         ConfigWindow.window = nil
-        NSApp.setActivationPolicy(.accessory)
     }
 }
