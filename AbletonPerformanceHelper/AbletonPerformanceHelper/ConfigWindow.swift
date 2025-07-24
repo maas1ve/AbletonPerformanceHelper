@@ -1,17 +1,35 @@
 import SwiftUI
 
 struct ConfigWindow: View {
-    @AppStorage("watchedApps") var watchedApps: String = "Ableton Live"
+    @AppStorage("selectedDAW") private var selectedDAW: String = DAW.abletonLive.rawValue
+    @AppStorage("launchAtLogin") private var launchAtLogin: Bool = false
+    @AppStorage("autoEnable") private var autoEnable: Bool = true
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Watched Apps (comma-separated):")
-            TextField("e.g. Ableton Live, Logic Pro", text: $watchedApps)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+        VStack(alignment: .leading, spacing: 12) {
+            Picker("Digital Audio Workstation", selection: $selectedDAW) {
+                ForEach(DAW.allCases) { daw in
+                    Text(daw.rawValue).tag(daw.rawValue)
+                }
+            }
+            .pickerStyle(DefaultPickerStyle())
+
+            Toggle("Launch app at login", isOn: $launchAtLogin)
+            Toggle("Automatically enable performance mode when selected DAW launches", isOn: $autoEnable)
+
+            HStack {
+                Button("Enable Performance Mode") {
+                    ScriptRunner.runScript(named: "enable_performance_mode.sh")
+                }
+                Button("Restore Normal Mode") {
+                    ScriptRunner.runScript(named: "restore_normal_mode.sh")
+                }
+            }
+
             Spacer()
         }
         .padding()
-        .frame(width: 300, height: 150)
+        .frame(width: 320, height: 220)
     }
 
     private static var window: NSWindow?
@@ -24,7 +42,7 @@ struct ConfigWindow: View {
         }
 
         let newWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 300, height: 150),
+            contentRect: NSRect(x: 0, y: 0, width: 320, height: 220),
             styleMask: [.titled, .closable],
             backing: .buffered,
             defer: false)
@@ -32,7 +50,17 @@ struct ConfigWindow: View {
         newWindow.setFrameAutosaveName("Config")
         newWindow.contentView = NSHostingView(rootView: ConfigWindow())
         newWindow.makeKeyAndOrderFront(nil)
+        NSApp.setActivationPolicy(.regular)
         NSApp.activate(ignoringOtherApps: true)
+        newWindow.delegate = WindowDelegate.shared
         window = newWindow
+    }
+}
+
+private class WindowDelegate: NSObject, NSWindowDelegate {
+    static let shared = WindowDelegate()
+    func windowWillClose(_ notification: Notification) {
+        ConfigWindow.window = nil
+        NSApp.setActivationPolicy(.accessory)
     }
 }

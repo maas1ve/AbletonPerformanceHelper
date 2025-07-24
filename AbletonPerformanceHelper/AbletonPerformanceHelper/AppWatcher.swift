@@ -3,23 +3,38 @@ import AppKit
 
 class AppWatcher {
     private var timer: Timer?
-    private let onAbletonLaunch: () -> Void
-    private var hasLaunchedAbleton = false
+    private let onLaunch: () -> Void
+    private var hasLaunched = false
 
-    init(onAbletonLaunch: @escaping () -> Void) {
-        self.onAbletonLaunch = onAbletonLaunch
+    init(onLaunch: @escaping () -> Void) {
+        self.onLaunch = onLaunch
     }
 
     func startMonitoring() {
-        timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
+            let dawName = UserDefaults.standard.string(forKey: "selectedDAW") ?? "Ableton Live"
             let running = NSWorkspace.shared.runningApplications
-            let isAbletonRunning = running.contains { $0.localizedName?.contains("Ableton Live") == true }
-            if isAbletonRunning && !self.hasLaunchedAbleton {
-                self.hasLaunchedAbleton = true
-                self.onAbletonLaunch()
-            } else if !isAbletonRunning {
-                self.hasLaunchedAbleton = false
+            let isRunning = running.contains { app in
+                guard let name = app.localizedName else { return false }
+                if dawName == "Ableton Live" {
+                    return name.contains("Ableton Live")
+                }
+                return name == dawName
+            }
+
+            if isRunning && !self.hasLaunched {
+                self.hasLaunched = true
+                if UserDefaults.standard.bool(forKey: "autoEnable") {
+                    self.onLaunch()
+                }
+            } else if !isRunning {
+                self.hasLaunched = false
             }
         }
+    }
+
+    func stopMonitoring() {
+        timer?.invalidate()
+        timer = nil
     }
 }

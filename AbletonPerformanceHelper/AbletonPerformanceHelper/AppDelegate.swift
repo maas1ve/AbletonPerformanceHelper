@@ -4,8 +4,9 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem!
     var watcher: AppWatcher!
-    
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        NSApp.setActivationPolicy(.accessory)
         setupMainMenu()
         setupStatusItem()
         startWatcher()
@@ -46,9 +47,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func startWatcher() {
-        watcher = AppWatcher(onAbletonLaunch: {
+        watcher = AppWatcher(onLaunch: {
+            let daw = UserDefaults.standard.string(forKey: "selectedDAW") ?? "Ableton Live"
             ScriptRunner.runScript(named: "enable_performance_mode.sh")
-            NotificationHelper.sendNotification(title: "Ableton Detected", body: "Performance Mode Enabled")
+            NotificationHelper.sendNotification(title: "\(daw) Detected", body: "Performance Mode Enabled")
         })
         watcher.startMonitoring()
     }
