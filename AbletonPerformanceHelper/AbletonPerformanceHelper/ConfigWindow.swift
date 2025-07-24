@@ -32,7 +32,7 @@ struct ConfigWindow: View {
         .frame(width: 320, height: 220)
     }
 
-    private static var window: NSWindow?
+    fileprivate static var window: NSWindow?
 
     static func show() {
         if let existing = window {
