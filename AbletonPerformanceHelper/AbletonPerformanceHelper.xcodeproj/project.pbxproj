@@ -4,33 +4,20 @@
 	classes = {
 	};
 	objectVersion = 77;
-        objects = {
-
-/* Begin PBXBuildFile section */
-                A9914EA02E2ECB960001D8E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9914E902E2ECB960001D8E7 /* AppDelegate.swift */; };
-                A9914EA12E2ECB960001D8E7 /* AppWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9914E912E2ECB960001D8E7 /* AppWatcher.swift */; };
-                A9914EA22E2ECB960001D8E7 /* ConfigWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9914E922E2ECB960001D8E7 /* ConfigWindow.swift */; };
-                A9914EA32E2ECB960001D8E7 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9914E932E2ECB960001D8E7 /* NotificationHelper.swift */; };
-                A9914EA42E2ECB960001D8E7 /* PerformanceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9914E942E2ECB960001D8E7 /* PerformanceHelper.swift */; };
-                A9914EA52E2ECB960001D8E7 /* ScriptRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9914E952E2ECB960001D8E7 /* ScriptRunner.swift */; };
-                A9914EA62E2ECB960001D8E7 /* DAW.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9914E962E2ECB960001D8E7 /* DAW.swift */; };
-                A9914EA72E2ECB960001D8E7 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9914E972E2ECB960001D8E7 /* MainMenu.swift */; };
-                A9914EA82E2ECB960001D8E7 /* enable_performance_mode.sh in Resources */ = {isa = PBXBuildFile; fileRef = A9914E982E2ECB960001D8E7 /* enable_performance_mode.sh */; };
-                A9914EA92E2ECB960001D8E7 /* restore_normal_mode.sh in Resources */ = {isa = PBXBuildFile; fileRef = A9914E992E2ECB960001D8E7 /* restore_normal_mode.sh */; };
-/* End PBXBuildFile section */
+	objects = {
 
 /* Begin PBXFileReference section */
-                A9914E902E2ECB960001D8E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-                A9914E912E2ECB960001D8E7 /* AppWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWatcher.swift; sourceTree = "<group>"; };
-                A9914E922E2ECB960001D8E7 /* ConfigWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigWindow.swift; sourceTree = "<group>"; };
-                A9914E932E2ECB960001D8E7 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
-                A9914E942E2ECB960001D8E7 /* PerformanceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceHelper.swift; sourceTree = "<group>"; };
-                A9914E952E2ECB960001D8E7 /* ScriptRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptRunner.swift; sourceTree = "<group>"; };
-                A9914E962E2ECB960001D8E7 /* DAW.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAW.swift; sourceTree = "<group>"; };
-                A9914E972E2ECB960001D8E7 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
-                A9914E982E2ECB960001D8E7 /* enable_performance_mode.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.zsh; path = Scripts/enable_performance_mode.sh; sourceTree = "<group>"; };
-                A9914E992E2ECB960001D8E7 /* restore_normal_mode.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.zsh; path = Scripts/restore_normal_mode.sh; sourceTree = "<group>"; };
-                A9914E802E2ECB960001D8E7 /* AbletonPerformanceHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AbletonPerformanceHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9914E802E2ECB960001D8E7 /* AbletonPerformanceHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AbletonPerformanceHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9914E902E2ECB960001D8E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A9914E912E2ECB960001D8E7 /* AppWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWatcher.swift; sourceTree = "<group>"; };
+		A9914E922E2ECB960001D8E7 /* ConfigWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigWindow.swift; sourceTree = "<group>"; };
+		A9914E932E2ECB960001D8E7 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
+		A9914E942E2ECB960001D8E7 /* PerformanceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceHelper.swift; sourceTree = "<group>"; };
+		A9914E952E2ECB960001D8E7 /* ScriptRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptRunner.swift; sourceTree = "<group>"; };
+		A9914E962E2ECB960001D8E7 /* DAW.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAW.swift; sourceTree = "<group>"; };
+		A9914E972E2ECB960001D8E7 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		A9914E982E2ECB960001D8E7 /* Scripts/enable_performance_mode.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.zsh; path = Scripts/enable_performance_mode.sh; sourceTree = "<group>"; };
+		A9914E992E2ECB960001D8E7 /* Scripts/restore_normal_mode.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.zsh; path = Scripts/restore_normal_mode.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -52,11 +39,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A92252252E32E1520083DA93 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				A9914E902E2ECB960001D8E7 /* AppDelegate.swift */,
+				A9914E912E2ECB960001D8E7 /* AppWatcher.swift */,
+				A9914E922E2ECB960001D8E7 /* ConfigWindow.swift */,
+				A9914E932E2ECB960001D8E7 /* NotificationHelper.swift */,
+				A9914E942E2ECB960001D8E7 /* PerformanceHelper.swift */,
+				A9914E952E2ECB960001D8E7 /* ScriptRunner.swift */,
+				A9914E962E2ECB960001D8E7 /* DAW.swift */,
+				A9914E972E2ECB960001D8E7 /* MainMenu.swift */,
+				A9914E982E2ECB960001D8E7 /* Scripts/enable_performance_mode.sh */,
+				A9914E992E2ECB960001D8E7 /* Scripts/restore_normal_mode.sh */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		A9914E772E2ECB960001D8E7 = {
 			isa = PBXGroup;
 			children = (
 				A9914E822E2ECB960001D8E7 /* AbletonPerformanceHelper */,
 				A9914E812E2ECB960001D8E7 /* Products */,
+				A92252252E32E1520083DA93 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -129,33 +134,23 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-                A9914E7E2E2ECB960001D8E7 /* Resources */ = {
-                        isa = PBXResourcesBuildPhase;
-                        buildActionMask = 2147483647;
-                        files = (
-                                A9914EA82E2ECB960001D8E7 /* enable_performance_mode.sh in Resources */,
-                                A9914EA92E2ECB960001D8E7 /* restore_normal_mode.sh in Resources */,
-                        );
-                        runOnlyForDeploymentPostprocessing = 0;
-                };
+		A9914E7E2E2ECB960001D8E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-                A9914E7C2E2ECB960001D8E7 /* Sources */ = {
-                        isa = PBXSourcesBuildPhase;
-                        buildActionMask = 2147483647;
-                        files = (
-                                A9914EA02E2ECB960001D8E7 /* AppDelegate.swift in Sources */,
-                                A9914EA12E2ECB960001D8E7 /* AppWatcher.swift in Sources */,
-                                A9914EA22E2ECB960001D8E7 /* ConfigWindow.swift in Sources */,
-                                A9914EA32E2ECB960001D8E7 /* NotificationHelper.swift in Sources */,
-                                A9914EA42E2ECB960001D8E7 /* PerformanceHelper.swift in Sources */,
-                                A9914EA52E2ECB960001D8E7 /* ScriptRunner.swift in Sources */,
-                                A9914EA62E2ECB960001D8E7 /* DAW.swift in Sources */,
-                                A9914EA72E2ECB960001D8E7 /* MainMenu.swift in Sources */,
-                        );
-                        runOnlyForDeploymentPostprocessing = 0;
-                };
+		A9914E7C2E2ECB960001D8E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
