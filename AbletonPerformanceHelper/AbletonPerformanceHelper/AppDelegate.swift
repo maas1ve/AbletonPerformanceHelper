@@ -16,15 +16,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let mainMenu = NSMenu()
         let appMenuItem = NSMenuItem()
         mainMenu.addItem(appMenuItem)
-        
-        let appMenu = NSMenu(title: "AbletonPerformanceHelper")
+
+        let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? "Application"
+        let appMenu = NSMenu(title: appName)
         appMenuItem.submenu = appMenu
-        appMenu.addItem(withTitle: "About AbletonPerformanceHelper", action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: "")
+        appMenu.addItem(withTitle: "About \(appName)", action: #selector(showAboutPanel), keyEquivalent: "")
         appMenu.addItem(NSMenuItem.separator())
         appMenu.addItem(withTitle: "Preferences…", action: #selector(openConfig), keyEquivalent: ",")
         appMenu.addItem(NSMenuItem.separator())
-        appMenu.addItem(withTitle: "Quit AbletonPerformanceHelper", action: #selector(quitApp), keyEquivalent: "q")
-        
+        appMenu.addItem(withTitle: "Quit \(appName)", action: #selector(quitApp), keyEquivalent: "q")
+
         NSApp.mainMenu = mainMenu
     }
 
@@ -38,9 +39,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let menu = NSMenu()
         menu.addItem(withTitle: "Enable Performance Mode", action: #selector(enablePerformanceMode), keyEquivalent: "e")
-        menu.addItem(withTitle: "Restore Normal Mode", action: #selector(restoreNormalMode), keyEquivalent: "r")
-        menu.addItem(NSMenuItem.separator())
-        menu.addItem(withTitle: "Preferences…", action: #selector(openConfig), keyEquivalent: ",")
+        menu.addItem(withTitle: "Open Config", action: #selector(openConfig), keyEquivalent: ",")
         menu.addItem(NSMenuItem.separator())
         menu.addItem(withTitle: "Quit", action: #selector(quitApp), keyEquivalent: "q")
 
@@ -66,6 +65,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc func openConfig() {
         ConfigWindow.show()
+    }
+
+    @objc func showAboutPanel() {
+        NSApp.orderFrontStandardAboutPanel(nil)
+        NSApp.activate(ignoringOtherApps: true)
     }
 
     @objc func quitApp() {
