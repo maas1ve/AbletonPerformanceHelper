@@ -31,7 +31,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupStatusItem() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         if let button = statusItem.button {
-            button.image = NSImage(named: "MenuBarIcon")
+            button.image = NSImage(systemSymbolName: "speedometer", accessibilityDescription: "Performance")
             button.image?.isTemplate = true
         }
         
