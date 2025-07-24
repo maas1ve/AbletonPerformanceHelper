@@ -22,7 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         appMenuItem.submenu = appMenu
         appMenu.addItem(withTitle: "About \(appName)", action: #selector(showAboutPanel), keyEquivalent: "")
         appMenu.addItem(NSMenuItem.separator())
-        appMenu.addItem(withTitle: "Preferences…", action: #selector(openConfig), keyEquivalent: ",")
+        appMenu.addItem(withTitle: "Preferences…", action: #selector(openConfig(_:)), keyEquivalent: ",")
         appMenu.addItem(NSMenuItem.separator())
         appMenu.addItem(withTitle: "Quit \(appName)", action: #selector(quitApp), keyEquivalent: "q")
 
@@ -39,7 +39,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let menu = NSMenu()
         menu.addItem(withTitle: "Enable Performance Mode", action: #selector(enablePerformanceMode), keyEquivalent: "e")
-        menu.addItem(withTitle: "Open Config", action: #selector(openConfig), keyEquivalent: ",")
+        menu.addItem(withTitle: "Open Config", action: #selector(openConfig(_:)), keyEquivalent: ",")
         menu.addItem(NSMenuItem.separator())
         menu.addItem(withTitle: "Quit", action: #selector(quitApp), keyEquivalent: "q")
 
@@ -63,7 +63,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         ScriptRunner.runScript(named: "restore_normal_mode.sh")
     }
 
-    @objc func openConfig() {
+    @IBAction func openConfig(_ sender: Any) {
         ConfigWindow.show()
     }
 
