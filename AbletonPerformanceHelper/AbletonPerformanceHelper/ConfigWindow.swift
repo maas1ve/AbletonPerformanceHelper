@@ -29,7 +29,7 @@ struct ConfigWindow: View {
             Spacer()
         }
         .padding()
-        .frame(width: 320, height: 220)
+        .frame(width: 420, height: 220)
     }
 
     fileprivate static var window: NSWindow?
@@ -44,7 +44,7 @@ struct ConfigWindow: View {
         }
 
         let newWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 320, height: 220),
+            contentRect: NSRect(x: 0, y: 0, width: 420, height: 220),
             styleMask: [.titled, .closable],
             backing: .buffered,
             defer: false)

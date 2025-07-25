@@ -23,6 +23,10 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A9914E822E2ECB960001D8E7 /* AbletonPerformanceHelper */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			explicitFileTypes = {
+				Scripts/enable_performance_mode.sh = text.script;
+				Scripts/restore_normal_mode.sh = text.script;
+			};
 			path = AbletonPerformanceHelper;
 			sourceTree = "<group>";
 		};

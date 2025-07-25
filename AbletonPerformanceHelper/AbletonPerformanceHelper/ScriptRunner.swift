@@ -2,15 +2,30 @@ import Foundation
 
 class ScriptRunner {
     static func runScript(named scriptName: String) {
-        // Locate the script inside the application's bundled resources
-        guard let resourcePath = Bundle.main.resourcePath else {
-            print("Unable to locate script resources")
+        // Strip ".sh" if it's included by mistake
+        let baseName = scriptName.replacingOccurrences(of: ".sh", with: "")
+        
+        // Locate the script inside the app bundle Resources directory
+        guard let scriptPath = Bundle.main.path(forResource: baseName, ofType: "sh") else {
+            print("Script not found: \(baseName).sh")
             return
         }
-        let scriptPath = "\(resourcePath)/Scripts/\(scriptName)"
+
+        // Run the script with zsh
         let task = Process()
         task.launchPath = "/bin/zsh"
-        task.arguments = ["-c", scriptPath]
+        task.arguments = [scriptPath]
+
+        let pipe = Pipe()
+        task.standardOutput = pipe
+        task.standardError = pipe
+
         task.launch()
+
+        // Capture output
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        if let output = String(data: data, encoding: .utf8) {
+            print("Output from \(baseName):\n\(output)")
+        }
     }
 }
