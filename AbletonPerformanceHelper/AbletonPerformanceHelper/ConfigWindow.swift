@@ -1,6 +1,7 @@
 import SwiftUI
+import AppKit
 
-struct ConfigWindow: View {
+struct ConfigWindowView: View {
     @AppStorage("selectedDAW") private var selectedDAW: String = DAW.abletonLive.rawValue
     @AppStorage("launchAtLogin") private var launchAtLogin: Bool = false
     @AppStorage("autoEnable") private var autoEnable: Bool = true
@@ -31,38 +32,55 @@ struct ConfigWindow: View {
         .padding()
         .frame(width: 420, height: 220)
     }
+}
 
-    fileprivate static var window: NSWindow?
+// MARK: - Window wrapper
+final class ConfigWindow {
+    private static var window: NSWindow?
 
     static func show() {
-        if let existing = window {
-            NSApp.setActivationPolicy(.regular)
-            existing.makeKeyAndOrderFront(nil)
-            existing.orderFrontRegardless()
+        if let win = window {
+            win.makeKeyAndOrderFront(nil)
             NSApp.activate(ignoringOtherApps: true)
             return
         }
 
-        let newWindow = NSWindow(
+        let win = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 420, height: 220),
-            styleMask: [.titled, .closable],
+            styleMask: [.titled, .closable, .miniaturizable],
             backing: .buffered,
-            defer: false)
-        newWindow.center()
-        newWindow.setFrameAutosaveName("Config")
-        newWindow.contentView = NSHostingView(rootView: ConfigWindow())
-        NSApp.setActivationPolicy(.regular)
-        newWindow.makeKeyAndOrderFront(nil)
-        newWindow.orderFrontRegardless()
+            defer: false
+        )
+        win.title = "Ableton Performance Helper — Preferences"
+        win.center()
+        win.isReleasedWhenClosed = false // <- don't dealloc on close
+        win.contentView = NSHostingView(rootView: ConfigWindowView())
+
+        // Intercept "close" (red button) and hide instead
+        let delegate = ConfigWindowDelegate.shared
+        win.delegate = delegate
+
+        window = win
+        win.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
-        newWindow.delegate = WindowDelegate.shared
-        window = newWindow
+    }
+
+    fileprivate static func hide() {
+        window?.orderOut(nil)
+    }
+
+    fileprivate static func destroy() {
+        window?.delegate = nil
+        window = nil
     }
 }
 
-private class WindowDelegate: NSObject, NSWindowDelegate {
-    static let shared = WindowDelegate()
-    func windowWillClose(_ notification: Notification) {
-        ConfigWindow.window = nil
+final class ConfigWindowDelegate: NSObject, NSWindowDelegate {
+    static let shared = ConfigWindowDelegate()
+
+    // Hide instead of closing to avoid SwiftUI teardown crashes
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        ConfigWindow.hide()
+        return false
     }
 }

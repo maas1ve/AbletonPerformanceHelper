@@ -4,10 +4,12 @@ import AppKit
 class AppWatcher {
     private var timer: Timer?
     private let onLaunch: () -> Void
+    private let onQuit: () -> Void
     private var hasLaunched = false
 
-    init(onLaunch: @escaping () -> Void) {
+    init(onLaunch: @escaping () -> Void, onQuit: @escaping () -> Void) {
         self.onLaunch = onLaunch
+        self.onQuit = onQuit
     }
 
     func startMonitoring() {
@@ -24,11 +26,10 @@ class AppWatcher {
 
             if isRunning && !self.hasLaunched {
                 self.hasLaunched = true
-                if UserDefaults.standard.bool(forKey: "autoEnable") {
-                    self.onLaunch()
-                }
-            } else if !isRunning {
+                self.onLaunch()
+            } else if !isRunning && self.hasLaunched {
                 self.hasLaunched = false
+                self.onQuit()
             }
         }
     }
