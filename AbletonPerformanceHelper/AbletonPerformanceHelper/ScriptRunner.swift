@@ -8,7 +8,7 @@ class ScriptRunner {
         args: [String] = []
     ) -> Int32 {
 
-        // Resolve script from app bundle Resources/Scripts
+        // Resolve from bundle: Resources/Scripts/<name>.sh
         let scriptURL: URL? = {
             if named.hasPrefix("/") { return URL(fileURLWithPath: named) }
             let base = (named as NSString).deletingPathExtension
@@ -36,20 +36,16 @@ class ScriptRunner {
         task.standardOutput = outPipe
         task.standardError  = errPipe
 
-        do {
-            try task.run()
-        } catch {
+        do { try task.run() } catch {
             print("[ScriptRunner] Launch failed: \(error.localizedDescription)")
             return -2
         }
-
         task.waitUntilExit()
 
         let stdoutText = String(data: outPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
         let stderrText = String(data: errPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
-
         if !stdoutText.isEmpty { print(stdoutText) }
-        if !stderrText.isEmpty  { FileHandle.standardError.write(Data(stderrText.utf8)) }
+        if !stderrText.isEmpty { FileHandle.standardError.write(Data(stderrText.utf8)) }
 
         return task.terminationStatus
     }

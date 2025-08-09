@@ -4,28 +4,50 @@ log() { echo "[$(date +'%F %T')] $*"; }
 
 STATE_DIR="$HOME/Library/Application Support/AbletonPerformanceHelper"
 STOPPED_AGENTS="$STATE_DIR/agents.stopped"
+ANIMS_STATE="$STATE_DIR/.anims_touched"
 
-log "Re-enabling Time Machine auto-backups (best-effort)…"
-if command -v tmutil >/dev/null 2>&1; then
-  tmutil enable || true
-fi
-
-log "Resuming Spotlight indexing (best-effort)…"
-if command -v mdutil >/dev/null 2>&1; then
-  for vol in /System/Volumes/Data /; do
-    mdutil -i on "$vol" || true
-  done
-fi
-
-log "Restoring per-user LaunchAgents we stopped…"
+log "Restoring user LaunchAgents we stopped…"
 if [[ -f "$STOPPED_AGENTS" ]]; then
-  sort -u "$STOPPED_AGENTS" | while read -r label; do
-    if [[ -f "$HOME/Library/LaunchAgents/$label.plist" ]]; then
-      launchctl bootstrap "gui/$UID" "$HOME/Library/LaunchAgents/$label.plist" 2>/dev/null || true
+  # read back in reverse (tac not on all macs)
+  if command -v tac >/dev/null 2>&1; then
+    lines=$(tac "$STOPPED_AGENTS")
+  else
+    lines=$(tail -r "$STOPPED_AGENTS")
+  fi
+  IFS=$'\n'
+  for label in $lines; do
+    [[ -z "$label" ]] && continue
+    # Try to bootstrap from system LaunchAgents if present
+    if [[ -f "/System/Library/LaunchAgents/${label}.plist" ]]; then
+      launchctl bootstrap "gui/$UID" "/System/Library/LaunchAgents/${label}.plist" 2>/dev/null || true
+    else
+      # If plist not found, just try enable (best-effort)
+      launchctl enable "gui/$UID/$label" 2>/dev/null || true
     fi
-    launchctl enable "gui/$UID/$label" 2>/dev/null || true
   done
-  rm -f "$STOPPED_AGENTS"
+  IFS=$' \t\n'
+  : > "$STOPPED_AGENTS"
 fi
 
-log "Performance mode disabled."
+if [[ -f "$ANIMS_STATE" ]]; then
+  log "Reverting UI defaults…"
+  defaults delete NSGlobalDomain NSAutomaticWindowAnimationsEnabled 2>/dev/null || true
+  defaults delete NSGlobalDomain NSWindowResizeTime 2>/dev/null || true
+  defaults delete -g QLPanelAnimationDuration 2>/dev/null || true
+  defaults delete com.apple.dock autohide-time-modifier 2>/dev/null || true
+  defaults delete com.apple.Dock autohide-delay 2>/dev/null || true
+  defaults delete com.apple.dock expose-animation-duration 2>/dev/null || true
+  defaults delete com.apple.dock launchanim 2>/dev/null || true
+  defaults delete com.apple.finder DisableAllAnimations 2>/dev/null || true
+  defaults delete com.apple.Accessibility ReduceMotionEnabled 2>/dev/null || true
+  defaults delete com.apple.universalaccess reduceMotion 2>/dev/null || true
+  defaults delete com.apple.universalaccess reduceTransparency 2>/dev/null || true
+  defaults delete com.apple.dock springboard-show-duration 2>/dev/null || true
+  defaults delete com.apple.dock springboard-hide-duration 2>/dev/null || true
+  defaults delete NSGlobalDomain NSScrollAnimationEnabled 2>/dev/null || true
+  killall Dock 2>/dev/null || true
+  killall Finder 2>/dev/null || true
+  rm -f "$ANIMS_STATE"
+fi
+
+log "Performance mode restored."
