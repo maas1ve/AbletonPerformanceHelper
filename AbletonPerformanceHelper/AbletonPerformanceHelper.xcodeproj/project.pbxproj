@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXCopyFilesBuildPhase section */
+		A91D49FF2E47A7E3001119CA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		A94BB5CA2E46B1E10057B27A /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
@@ -20,6 +29,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A91D4A012E47A7E3001119CA /* APHHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = APHHelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9914E802E2ECB960001D8E7 /* AbletonPerformanceHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AbletonPerformanceHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9914E902E2ECB960001D8E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9914E912E2ECB960001D8E7 /* AppWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWatcher.swift; sourceTree = "<group>"; };
@@ -34,9 +44,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A91D4A092E47A7F6001119CA /* Exceptions for "AbletonPerformanceHelper" folder in "APHHelper" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Helper/HelperService.swift,
+				Shared/HelperXPC.swift,
+			);
+			target = A91D4A002E47A7E3001119CA /* APHHelper */;
+		};
 		A94BB5D32E46CCE60057B27A /* Exceptions for "AbletonPerformanceHelper" folder in "AbletonPerformanceHelper" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Helper/HelperCommands.swift,
+				Helper/HelperService.swift,
 				Info.plist,
 			);
 			target = A9914E7F2E2ECB960001D8E7 /* AbletonPerformanceHelper */;
@@ -44,6 +64,13 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		A91D49FC2E479C69001119CA /* Exceptions for "AbletonPerformanceHelper" folder in "Copy Bundle Resources" phase from "AbletonPerformanceHelper" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = A9914E7E2E2ECB960001D8E7 /* Resources */;
+			membershipExceptions = (
+				Helper/HelperCommands.swift,
+			);
+		};
 		A94BB5CC2E46B21A0057B27A /* Exceptions for "AbletonPerformanceHelper" folder in "Copy Files" phase from "AbletonPerformanceHelper" target */ = {
 			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
 			buildPhase = A94BB5CA2E46B1E10057B27A /* Copy Files */;
@@ -55,11 +82,18 @@
 /* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		A91D4A022E47A7E3001119CA /* APHHelper */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = APHHelper;
+			sourceTree = "<group>";
+		};
 		A9914E822E2ECB960001D8E7 /* AbletonPerformanceHelper */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				A94BB5D32E46CCE60057B27A /* Exceptions for "AbletonPerformanceHelper" folder in "AbletonPerformanceHelper" target */,
+				A91D49FC2E479C69001119CA /* Exceptions for "AbletonPerformanceHelper" folder in "Copy Bundle Resources" phase from "AbletonPerformanceHelper" target */,
 				A94BB5CC2E46B21A0057B27A /* Exceptions for "AbletonPerformanceHelper" folder in "Copy Files" phase from "AbletonPerformanceHelper" target */,
+				A91D4A092E47A7F6001119CA /* Exceptions for "AbletonPerformanceHelper" folder in "APHHelper" target */,
 			);
 			explicitFileTypes = {
 				Scripts/enable_performance_mode.sh = text.script;
@@ -71,6 +105,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A91D49FE2E47A7E3001119CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9914E7D2E2ECB960001D8E7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -102,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				A9914E822E2ECB960001D8E7 /* AbletonPerformanceHelper */,
+				A91D4A022E47A7E3001119CA /* APHHelper */,
 				A9914E812E2ECB960001D8E7 /* Products */,
 				A92252252E32E1520083DA93 /* Recovered References */,
 			);
@@ -112,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				A9914E802E2ECB960001D8E7 /* AbletonPerformanceHelper.app */,
+				A91D4A012E47A7E3001119CA /* APHHelper */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,6 +162,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A91D4A002E47A7E3001119CA /* APHHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A91D4A052E47A7E3001119CA /* Build configuration list for PBXNativeTarget "APHHelper" */;
+			buildPhases = (
+				A91D49FD2E47A7E3001119CA /* Sources */,
+				A91D49FE2E47A7E3001119CA /* Frameworks */,
+				A91D49FF2E47A7E3001119CA /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A91D4A022E47A7E3001119CA /* APHHelper */,
+			);
+			name = APHHelper;
+			packageProductDependencies = (
+			);
+			productName = APHHelper;
+			productReference = A91D4A012E47A7E3001119CA /* APHHelper */;
+			productType = "com.apple.product-type.tool";
+		};
 		A9914E7F2E2ECB960001D8E7 /* AbletonPerformanceHelper */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A9914E8B2E2ECB990001D8E7 /* Build configuration list for PBXNativeTarget "AbletonPerformanceHelper" */;
@@ -154,6 +219,9 @@
 				LastUpgradeCheck = 2600;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
+					A91D4A002E47A7E3001119CA = {
+						CreatedOnToolsVersion = 26.0;
+					};
 					A9914E7F2E2ECB960001D8E7 = {
 						CreatedOnToolsVersion = 26.0;
 					};
@@ -174,6 +242,7 @@
 			projectRoot = "";
 			targets = (
 				A9914E7F2E2ECB960001D8E7 /* AbletonPerformanceHelper */,
+				A91D4A002E47A7E3001119CA /* APHHelper */,
 			);
 		};
 /* End PBXProject section */
@@ -216,6 +285,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A91D49FD2E47A7E3001119CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9914E7C2E2ECB960001D8E7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -226,6 +302,34 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		A91D4A062E47A7E3001119CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 82KX9XE89H;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maas1ve.AbletonPerformanceHelper.Helper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A91D4A072E47A7E3001119CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 82KX9XE89H;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maas1ve.AbletonPerformanceHelper.Helper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		A9914E892E2ECB990001D8E7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -353,6 +457,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				AUTOMATION_APPLE_EVENTS = NO;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -400,6 +505,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				AUTOMATION_APPLE_EVENTS = NO;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -443,6 +549,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A91D4A052E47A7E3001119CA /* Build configuration list for PBXNativeTarget "APHHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A91D4A062E47A7E3001119CA /* Debug */,
+				A91D4A072E47A7E3001119CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A9914E7B2E2ECB960001D8E7 /* Build configuration list for PBXProject "AbletonPerformanceHelper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
