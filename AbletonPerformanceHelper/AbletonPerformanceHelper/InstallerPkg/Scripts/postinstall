@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+PLIST="/Library/LaunchDaemons/com.maas1ve.APH.Helper.plist"
+LABEL="com.maas1ve.APH.Helper"
+
+if [ -f "$PLIST" ]; then
+  launchctl bootstrap system "$PLIST" || launchctl enable system/"$LABEL"
+fi
+
+# If you add an “Advanced” choice, detect its receipt here and apply extras.
+exit 0

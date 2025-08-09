@@ -1,40 +1,33 @@
 import Cocoa
 
 class AppDelegate: NSObject, NSApplicationDelegate {
-    // Status item + state
     var statusItem: NSStatusItem!
     var watcher: AppWatcher!
 
-    // Single source of truth for perf mode (mirrors state file written by helper/monitor)
     private var perfOn = false
-    // Toggles
-    private var strictMode  = UserDefaults.standard.bool(forKey: "strictMode")   // kills contactsd (best‑effort)
-    private var extremeMode = UserDefaults.standard.bool(forKey: "extremeMode")  // kills telemetry/etc. (user-scope)
+    private var strictMode  = UserDefaults.standard.bool(forKey: "strictMode")
+    private var extremeMode = UserDefaults.standard.bool(forKey: "extremeMode")
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         print("[AppDelegate] applicationDidFinishLaunching")
 
         setupMainMenu()
         setupStatusItem()
+        NotificationHelper.requestPermission()
 
-        // Sync initial state from the state file if LaunchAgent toggled it before app start
         let stateFile = ("~/Library/Application Support/AbletonPerformanceHelper/.perf_on" as NSString).expandingTildeInPath
         perfOn = FileManager.default.fileExists(atPath: stateFile)
         rebuildStatusMenu()
 
-        // Watch for external changes (LaunchAgent) and reflect in menu
         Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
             let on = FileManager.default.fileExists(atPath: stateFile)
-            if on != self.perfOn {
-                self.perfOn = on
-                self.rebuildStatusMenu()
-            }
+            if on != self.perfOn { self.perfOn = on; self.rebuildStatusMenu() }
         }
 
         startWatcher()
     }
 
-    // MARK: - App menu (programmatic equivalent of a basic .xib menu)
+    // MARK: Menu bar (top app menu)
     private func setupMainMenu() {
         let mainMenu = NSMenu()
         let appItem = NSMenuItem()
@@ -52,23 +45,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.mainMenu = mainMenu
     }
 
-    // MARK: - Status bar item
+    // MARK: Status item
     private func setupStatusItem() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         guard let button = statusItem.button else { return }
 
         if let img = NSImage(named: "MenuBarIcon") {
-            img.isTemplate = true
-            button.image = img
+            img.isTemplate = true; button.image = img
             print("[StatusItem] Using asset MenuBarIcon")
-        } else if let sym = NSImage(systemSymbolName: "slider.horizontal.3",
-                                    accessibilityDescription: "Ableton Performance Helper") {
-            sym.isTemplate = true
-            button.image = sym
+        } else if let sym = NSImage(systemSymbolName: "slider.horizontal.3", accessibilityDescription: "Ableton Performance Helper") {
+            sym.isTemplate = true; button.image = sym
             print("[StatusItem] Using SF Symbol slider.horizontal.3")
         } else {
-            button.title = "APH"
-            print("[StatusItem] Using text fallback")
+            button.title = "APH"; print("[StatusItem] Using text fallback")
         }
         rebuildStatusMenu()
     }
@@ -76,11 +65,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func rebuildStatusMenu() {
         let menu = NSMenu()
 
-        // Toggle Performance Mode
         let toggleTitle = perfOn ? "Disable Performance Mode" : "Enable Performance Mode"
         menu.addItem(withTitle: toggleTitle, action: #selector(togglePerformanceMode), keyEquivalent: "t")
 
-        // Strict / Extreme toggles
         menu.addItem(NSMenuItem.separator())
         let strictItem = NSMenuItem(title: "Strict Mode (kill Contacts agents)", action: #selector(toggleStrictMode), keyEquivalent: "")
         strictItem.state = strictMode ? .on : .off
@@ -90,12 +77,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         extremeItem.state = extremeMode ? .on : .off
         menu.addItem(extremeItem)
 
-        // LaunchAgent helper (monitor) controls
         menu.addItem(NSMenuItem.separator())
         menu.addItem(withTitle: "Install Login Monitor", action: #selector(installMonitor), keyEquivalent: "")
         menu.addItem(withTitle: "Remove Login Monitor",  action: #selector(removeMonitor),  keyEquivalent: "")
 
-        // Log + Preferences + Quit
         menu.addItem(NSMenuItem.separator())
         menu.addItem(withTitle: "View Log…", action: #selector(openLog), keyEquivalent: "l")
         menu.addItem(NSMenuItem.separator())
@@ -106,7 +91,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.menu = menu
     }
 
-    // MARK: - Unified setter
     private func setPerformanceMode(_ enable: Bool, source: String) {
         if enable {
             var env: [String:String] = [:]
@@ -114,7 +98,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if extremeMode { env["EXTREME"] = "1" }
             _ = ScriptRunner.runScript(named: "enable_performance_mode.sh", env: env)
             perfOn = true
-            NotificationHelper.sendNotification(title: "Performance Mode Enabled", body: "Triggered by \(source)\(strictMode ? " (Strict)" : "")\(extremeMode ? " (Extreme)" : "")")
+            NotificationHelper.sendNotification(title: "Performance Mode Enabled",
+                                                body: "Triggered by \(source)\(strictMode ? " (Strict)" : "")\(extremeMode ? " (Extreme)" : "")")
         } else {
             _ = ScriptRunner.runScript(named: "restore_normal_mode.sh")
             perfOn = false
@@ -123,7 +108,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         rebuildStatusMenu()
     }
 
-    // MARK: - AppWatcher
     private func startWatcher() {
         watcher = AppWatcher(
             onLaunch: {
@@ -140,7 +124,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         watcher.startMonitoring()
     }
 
-    // MARK: - Actions
+    // MARK: Actions
     @objc private func togglePerformanceMode() { setPerformanceMode(!perfOn, source: "Menu") }
 
     @objc private func toggleStrictMode() {

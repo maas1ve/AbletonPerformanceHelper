@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+LABEL="com.maas1ve.APH.Helper"
+if launchctl print "system/$LABEL" >/dev/null 2>&1; then
+  launchctl bootout system/"$LABEL" || true
+fi
+rm -f /Library/PrivilegedHelperTools/com.maas1ve.AbletonPerformanceHelper.helper || true
+rm -f /Library/LaunchDaemons/com.maas1ve.APH.Helper.plist || true
+exit 0

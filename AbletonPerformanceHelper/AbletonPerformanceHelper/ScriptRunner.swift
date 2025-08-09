@@ -8,7 +8,6 @@ class ScriptRunner {
         args: [String] = []
     ) -> Int32 {
 
-        // Resolve from bundle: Resources/Scripts/<name>.sh
         let scriptURL: URL? = {
             if named.hasPrefix("/") { return URL(fileURLWithPath: named) }
             let base = (named as NSString).deletingPathExtension
@@ -16,10 +15,7 @@ class ScriptRunner {
             return Bundle.main.url(forResource: base, withExtension: ext, subdirectory: "Scripts")
         }()
 
-        guard let url = scriptURL else {
-            print("[ScriptRunner] Not found: \(named)")
-            return -1
-        }
+        guard let url = scriptURL else { print("[ScriptRunner] Not found: \(named)"); return -1 }
 
         let task = Process()
         task.executableURL = url
@@ -36,10 +32,7 @@ class ScriptRunner {
         task.standardOutput = outPipe
         task.standardError  = errPipe
 
-        do { try task.run() } catch {
-            print("[ScriptRunner] Launch failed: \(error.localizedDescription)")
-            return -2
-        }
+        do { try task.run() } catch { print("[ScriptRunner] Launch failed: \(error)"); return -2 }
         task.waitUntilExit()
 
         let stdoutText = String(data: outPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""

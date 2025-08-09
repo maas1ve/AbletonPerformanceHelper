@@ -2,10 +2,9 @@
 set -euo pipefail
 log() { echo "[$(date +'%F %T')] $*"; }
 
-# Toggles (passed by AppDelegate via env)
-STRICT=${STRICT:-0}     # 1 = include Contacts agents
-EXTREME=${EXTREME:-0}   # 1 = boot user telemetry/analytics/etc.
-ADMIN=${ADMIN:-0}       # (placeholder for privileged helper)
+STRICT=${STRICT:-0}
+EXTREME=${EXTREME:-0}
+ADMIN=${ADMIN:-0}   # reserved for helper-aware path (called from app later)
 
 STATE_DIR="$HOME/Library/Application Support/AbletonPerformanceHelper"
 mkdir -p "$STATE_DIR"
@@ -14,43 +13,34 @@ STOPPED_AGENTS="$STATE_DIR/agents.stopped"
 ANIMS_STATE="$STATE_DIR/.anims_touched"
 : > "$ANIMS_STATE"
 
-# OS detection (coarse)
 MACOS_MAJOR="$(sw_vers -productVersion | cut -d. -f1)"
 IS_MONTEREY=$([[ "$MACOS_MAJOR" == "12" ]] && echo 1 || echo 0)
 IS_SEQUOIA=$([[ "$MACOS_MAJOR" == "15" ]] && echo 1 || echo 0)
 
-log "Stopping active Time Machine backup (best‑effort)…"
+log "Stopping Time Machine (best-effort)…"
 if command -v tmutil >/dev/null 2>&1; then
   tmutil stopbackup || true
   tmutil disable || log "tmutil disable may need admin; skipped if it failed."
 fi
 
-log "Pausing Spotlight indexing (best‑effort)…"
+log "Pausing Spotlight (best‑effort)…"
 if command -v mdutil >/dev/null 2>&1; then
   for vol in /System/Volumes/Data /; do
     mdutil -i off "$vol" || log "mdutil off failed for $vol (needs admin?)"
   done
 fi
 
-log "Booting out common per‑user LaunchAgents…"
-AGENTS=(
-  com.google.keystone.agent
-  com.microsoft.update.agent
-  com.adobe.CCXProcess
-  com.adobe.AdobeCreativeCloud
-)
+log "Booting common per‑user LaunchAgents…"
+AGENTS=( com.google.keystone.agent com.microsoft.update.agent com.adobe.CCXProcess com.adobe.AdobeCreativeCloud )
 if [[ "$STRICT" = "1" ]]; then
   AGENTS+=( com.apple.contactsd com.apple.AddressBook.ContactsAccountsService )
 fi
 for label in "${AGENTS[@]}"; do
   if launchctl print "gui/$UID/$label" >/dev/null 2>&1; then
-    if launchctl bootout "gui/$UID/$label"; then
-      echo "$label" >> "$STOPPED_AGENTS"
-    fi
+    if launchctl bootout "gui/$UID/$label"; then echo "$label" >> "$STOPPED_AGENTS"; fi
   fi
 done
 
-# UI / animations (no sudo)
 log "Applying low‑latency UI defaults…"
 defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
@@ -70,7 +60,6 @@ killall Dock 2>/dev/null || true
 killall Finder 2>/dev/null || true
 echo "applied" > "$ANIMS_STATE"
 
-# EXTREME: telemetry/assistant/photo/etc. (user agents only)
 if [[ "$EXTREME" = "1" ]]; then
   log "EXTREME: disabling user-scope telemetry/assistant/photo/shortcuts agents…"
   EXTRA_USER_AGENTS=(
@@ -92,25 +81,19 @@ if [[ "$EXTREME" = "1" ]]; then
   fi
   for label in "${EXTRA_USER_AGENTS[@]}"; do
     if launchctl print "gui/$UID/$label" >/dev/null 2>&1; then
-      if launchctl bootout "gui/$UID/$label"; then
-        echo "$label" >> "$STOPPED_AGENTS"
-      fi
+      if launchctl bootout "gui/$UID/$label"; then echo "$label" >> "$STOPPED_AGENTS"; fi
     fi
   done
 fi
 
-# Admin/system bits will be moved to privileged helper
 if [[ "$ADMIN" = "1" ]]; then
-  log "ADMIN tasks requested – will be run by privileged helper (once wired)."
+  log "ADMIN tasks: will be performed by privileged helper (app will call helper)."
 else
-  log "Skipping admin/system changes (no helper yet)."
+  log "Skipping admin/system tasks (helper not invoked)."
 fi
 
-# Quit common GUI apps politely (best‑effort)
-log "Politely quitting common background apps…"
+log "Quitting common GUI apps…"
 APPS=( com.apple.iCal com.apple.mail com.apple.Music com.google.Chrome com.microsoft.teams2 com.spotify.client com.hnc.Discord )
-for bid in "${APPS[@]}"; do
-  osascript -e "tell application id \"$bid\" to quit" >/dev/null 2>&1 || true
-done
+for bid in "${APPS[@]}"; do osascript -e "tell application id \"$bid\" to quit" >/dev/null 2>&1 || true; done
 
 log "Performance mode enabled. STRICT=$STRICT EXTREME=$EXTREME"

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer-gui-script minSpecVersion="2">
+  <title>Ableton Performance Helper</title>
+  <options customize="always" require-scripts="true"/>
+  <choices-outline>
+    <line choice="core"/>
+  </choices-outline>
+  <choice id="core" title="Core Helper" start_selected="true" enabled="false">
+    <pkg-ref id="com.maas1ve.APH.Core"/>
+  </choice>
+  <pkg-ref id="com.maas1ve.APH.Core" version="1.0" onConclusion="None">#core.pkg</pkg-ref>
+</installer-gui-script>

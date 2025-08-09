@@ -13,7 +13,6 @@ struct ConfigWindowView: View {
                     Text(daw.rawValue).tag(daw.rawValue)
                 }
             }
-            .pickerStyle(DefaultPickerStyle())
 
             Toggle("Launch app at login", isOn: $launchAtLogin)
             Toggle("Automatically enable performance mode when selected DAW launches", isOn: $autoEnable)
@@ -26,7 +25,6 @@ struct ConfigWindowView: View {
                     _ = ScriptRunner.runScript(named: "restore_normal_mode.sh")
                 }
             }
-
             Spacer()
         }
         .padding()
@@ -43,11 +41,9 @@ final class ConfigWindow {
             NSApp.activate(ignoringOtherApps: true)
             return
         }
-        let win = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 420, height: 220),
-            styleMask: [.titled, .closable, .miniaturizable],
-            backing: .buffered, defer: false
-        )
+        let win = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 420, height: 220),
+                           styleMask: [.titled, .closable, .miniaturizable],
+                           backing: .buffered, defer: false)
         win.title = "Ableton Performance Helper — Preferences"
         win.center()
         win.isReleasedWhenClosed = false
@@ -64,8 +60,5 @@ final class ConfigWindow {
 
 final class ConfigWindowDelegate: NSObject, NSWindowDelegate {
     static let shared = ConfigWindowDelegate()
-    func windowShouldClose(_ sender: NSWindow) -> Bool {
-        ConfigWindow.hide()
-        return false
-    }
+    func windowShouldClose(_ sender: NSWindow) -> Bool { ConfigWindow.hide(); return false }
 }

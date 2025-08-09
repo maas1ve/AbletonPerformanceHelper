@@ -15,25 +15,15 @@ final class AppWatcher {
     func startMonitoring() {
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
             let dawName = UserDefaults.standard.string(forKey: "selectedDAW") ?? "Ableton Live"
-            let running = NSWorkspace.shared.runningApplications
-            let isRunning = running.contains { app in
+            let isRunning = NSWorkspace.shared.runningApplications.contains { app in
                 guard let name = app.localizedName else { return false }
-                if dawName == "Ableton Live" { return name.contains("Ableton Live") }
-                return name == dawName
+                return (dawName == "Ableton Live") ? name.contains("Ableton Live") : name == dawName
             }
 
-            if isRunning && !self.sawRunning {
-                self.sawRunning = true
-                self.onLaunch()
-            } else if !isRunning && self.sawRunning {
-                self.sawRunning = false
-                self.onQuit()
-            }
+            if isRunning && !self.sawRunning { self.sawRunning = true;  self.onLaunch() }
+            else if !isRunning && self.sawRunning { self.sawRunning = false; self.onQuit() }
         }
     }
 
-    func stopMonitoring() {
-        timer?.invalidate()
-        timer = nil
-    }
+    func stopMonitoring() { timer?.invalidate(); timer = nil }
 }

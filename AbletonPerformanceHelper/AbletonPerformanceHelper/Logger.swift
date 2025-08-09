@@ -18,13 +18,12 @@ enum AppLogger {
         if fm.fileExists(atPath: logURL.path) {
             if let h = try? FileHandle(forWritingTo: logURL) {
                 defer { try? h.close() }
-                _ = try? h.seekToEnd()
+                try? h.seekToEnd()
                 try? h.write(contentsOf: data)
             }
         } else {
             try? data.write(to: logURL)
         }
-        // Also echo to Xcode console:
         print(line, terminator: "")
     }
 

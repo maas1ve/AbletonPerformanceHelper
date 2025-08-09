@@ -49,7 +49,6 @@
 			buildPhase = A94BB5CA2E46B1E10057B27A /* Copy Files */;
 			membershipExceptions = (
 				Scripts/enable_performance_mode.sh,
-				Scripts/monitor_ableton.sh,
 				Scripts/restore_normal_mode.sh,
 			);
 		};
@@ -202,7 +201,6 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/enable_performance_mode.sh",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/restore_normal_mode.sh",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/monitor_ableton.sh",
 			);
 			outputFileListPaths = (
 			);
@@ -210,11 +208,10 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/.chmod_done",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/enable_performance_mode.sh",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/restore_normal_mode.sh",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/monitor_ableton.sh",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# Make bundled Scripts executable after they've been copied into the app\nset -euo pipefail\n\nSCRIPTS_DIR=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts\"\n\necho \"[BuildPhase] Scripts dir: $SCRIPTS_DIR\"\n\nif [ -d \"$SCRIPTS_DIR\" ]; then\n    /bin/ls -l \"$SCRIPTS_DIR\" || true\n\n    /bin/chmod +x \"$SCRIPTS_DIR/enable_performance_mode.sh\" || true\n    /bin/chmod +x \"$SCRIPTS_DIR/restore_normal_mode.sh\" || true\n    /bin/chmod +x \"$SCRIPTS_DIR/monitor_ableton.sh\" || true\n\n    echo \"[BuildPhase] ✅ chmod done\"\n\n    # Ensure file can be created\n    /usr/bin/touch \"$SCRIPTS_DIR/.chmod_done\" || {\n        echo \"[BuildPhase] ❌ Could not create .chmod_done\"\n        exit 1\n    }\nelse\n    echo \"[BuildPhase] ⚠️ Scripts directory not found: $SCRIPTS_DIR\"\nfi\n\n";
+			shellScript = "set -euo pipefail\nSCRIPTS_DIR=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts\"\nmkdir -p \"$SCRIPTS_DIR\"\necho \"[BuildPhase] Scripts dir: $SCRIPTS_DIR\"\nif [ -d \"$SCRIPTS_DIR\" ]; then\n  /bin/ls -l \"$SCRIPTS_DIR\" || true\n  /bin/chmod +x \"$SCRIPTS_DIR/enable_performance_mode.sh\" || true\n  /bin/chmod +x \"$SCRIPTS_DIR/restore_normal_mode.sh\" || true\n  /bin/touch \"$SCRIPTS_DIR/.chmod_done\"\n  echo \"[BuildPhase] ✅ chmod done\"\nelse\n  echo \"[BuildPhase] ⚠️ Scripts directory not found\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
