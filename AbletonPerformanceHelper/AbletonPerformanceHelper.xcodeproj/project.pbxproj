@@ -29,7 +29,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A91D4A012E47A7E3001119CA /* APHHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = APHHelper; sourceTree = BUILT_PRODUCTS_DIR; };
+            A91D4A012E47A7E3001119CA /* com.maas1ve.AbletonPerformanceHelper.helper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = com.maas1ve.AbletonPerformanceHelper.helper; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9914E802E2ECB960001D8E7 /* AbletonPerformanceHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AbletonPerformanceHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9914E902E2ECB960001D8E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9914E912E2ECB960001D8E7 /* AppWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWatcher.swift; sourceTree = "<group>"; };
@@ -44,23 +44,25 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		A91D4A092E47A7F6001119CA /* Exceptions for "AbletonPerformanceHelper" folder in "APHHelper" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Helper/HelperService.swift,
-				Shared/HelperXPC.swift,
-			);
-			target = A91D4A002E47A7E3001119CA /* APHHelper */;
-		};
-		A94BB5D32E46CCE60057B27A /* Exceptions for "AbletonPerformanceHelper" folder in "AbletonPerformanceHelper" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Helper/HelperCommands.swift,
-				Helper/HelperService.swift,
-				Info.plist,
-			);
-			target = A9914E7F2E2ECB960001D8E7 /* AbletonPerformanceHelper */;
-		};
+                A91D4A092E47A7F6001119CA /* Exceptions for "AbletonPerformanceHelper" folder in "APHHelper" target */ = {
+                        isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+                        membershipExceptions = (
+                                Helper/HelperService.swift,
+                                Helper/HelperMain.swift,
+                                Shared/HelperXPC.swift,
+                        );
+                        target = A91D4A002E47A7E3001119CA /* APHHelper */;
+                };
+                A94BB5D32E46CCE60057B27A /* Exceptions for "AbletonPerformanceHelper" folder in "AbletonPerformanceHelper" target */ = {
+                        isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+                        membershipExceptions = (
+                                Helper/HelperCommands.swift,
+                                Helper/HelperService.swift,
+                                Helper/HelperMain.swift,
+                                Info.plist,
+                        );
+                        target = A9914E7F2E2ECB960001D8E7 /* AbletonPerformanceHelper */;
+                };
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
@@ -73,12 +75,13 @@
 		};
 		A94BB5CC2E46B21A0057B27A /* Exceptions for "AbletonPerformanceHelper" folder in "Copy Files" phase from "AbletonPerformanceHelper" target */ = {
 			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = A94BB5CA2E46B1E10057B27A /* Copy Files */;
-			membershipExceptions = (
-				Scripts/enable_performance_mode.sh,
-				Scripts/restore_normal_mode.sh,
-			);
-		};
+                        buildPhase = A94BB5CA2E46B1E10057B27A /* Copy Files */;
+                        membershipExceptions = (
+                                Scripts/enable_performance_mode.sh,
+                                Scripts/restore_normal_mode.sh,
+                                Scripts/monitor_ableton.sh,
+                        );
+                };
 /* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -154,7 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				A9914E802E2ECB960001D8E7 /* AbletonPerformanceHelper.app */,
-				A91D4A012E47A7E3001119CA /* APHHelper */,
+                            A91D4A012E47A7E3001119CA /* com.maas1ve.AbletonPerformanceHelper.helper */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -181,7 +184,7 @@
 			packageProductDependencies = (
 			);
 			productName = APHHelper;
-			productReference = A91D4A012E47A7E3001119CA /* APHHelper */;
+                    productReference = A91D4A012E47A7E3001119CA /* com.maas1ve.AbletonPerformanceHelper.helper */;
 			productType = "com.apple.product-type.tool";
 		};
 		A9914E7F2E2ECB960001D8E7 /* AbletonPerformanceHelper */ = {
@@ -266,21 +269,23 @@
 			);
 			inputFileListPaths = (
 			);
-			inputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/enable_performance_mode.sh",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/restore_normal_mode.sh",
-			);
+                        inputPaths = (
+                                "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts",
+                                "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/enable_performance_mode.sh",
+                                "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/restore_normal_mode.sh",
+                                "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/monitor_ableton.sh",
+                        );
 			outputFileListPaths = (
 			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/.chmod_done",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/enable_performance_mode.sh",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/restore_normal_mode.sh",
-			);
+                        outputPaths = (
+                                "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/.chmod_done",
+                                "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/enable_performance_mode.sh",
+                                "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/restore_normal_mode.sh",
+                                "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts/monitor_ableton.sh",
+                        );
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -euo pipefail\nSCRIPTS_DIR=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts\"\nmkdir -p \"$SCRIPTS_DIR\"\necho \"[BuildPhase] Scripts dir: $SCRIPTS_DIR\"\nif [ -d \"$SCRIPTS_DIR\" ]; then\n  /bin/ls -l \"$SCRIPTS_DIR\" || true\n  /bin/chmod +x \"$SCRIPTS_DIR/enable_performance_mode.sh\" || true\n  /bin/chmod +x \"$SCRIPTS_DIR/restore_normal_mode.sh\" || true\n  /bin/touch \"$SCRIPTS_DIR/.chmod_done\"\n  echo \"[BuildPhase] ✅ chmod done\"\nelse\n  echo \"[BuildPhase] ⚠️ Scripts directory not found\"\nfi\n";
+                        shellScript = "set -euo pipefail\nSCRIPTS_DIR=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Scripts\"\nmkdir -p \"$SCRIPTS_DIR\"\necho \"[BuildPhase] Scripts dir: $SCRIPTS_DIR\"\nif [ -d \"$SCRIPTS_DIR\" ]; then\n  /bin/ls -l \"$SCRIPTS_DIR\" || true\n  /bin/chmod +x \"$SCRIPTS_DIR/enable_performance_mode.sh\" || true\n  /bin/chmod +x \"$SCRIPTS_DIR/restore_normal_mode.sh\" || true\n  /bin/chmod +x \"$SCRIPTS_DIR/monitor_ableton.sh\" || true\n  /bin/touch \"$SCRIPTS_DIR/.chmod_done\"\n  echo \"[BuildPhase] ✅ chmod done\"\nelse\n  echo \"[BuildPhase] ⚠️ Scripts directory not found\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -309,10 +314,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 82KX9XE89H;
 				ENABLE_HARDENED_RUNTIME = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.maas1ve.AbletonPerformanceHelper.Helper;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+                                INFOPLIST_FILE = AbletonPerformanceHelper/Helper/Info.plist;
+                                MACOSX_DEPLOYMENT_TARGET = 15.0;
+                                PRODUCT_BUNDLE_IDENTIFIER = com.maas1ve.AbletonPerformanceHelper.helper;
+                                PRODUCT_NAME = com.maas1ve.AbletonPerformanceHelper.helper;
+                                SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+                                SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -323,10 +330,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 82KX9XE89H;
 				ENABLE_HARDENED_RUNTIME = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.maas1ve.AbletonPerformanceHelper.Helper;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+                                INFOPLIST_FILE = AbletonPerformanceHelper/Helper/Info.plist;
+                                MACOSX_DEPLOYMENT_TARGET = 15.0;
+                                PRODUCT_BUNDLE_IDENTIFIER = com.maas1ve.AbletonPerformanceHelper.helper;
+                                PRODUCT_NAME = com.maas1ve.AbletonPerformanceHelper.helper;
+                                SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+                                SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
